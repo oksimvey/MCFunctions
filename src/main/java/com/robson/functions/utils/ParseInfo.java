@@ -1,4 +1,6 @@
 package com.robson.functions.utils;
 
-public record ParseInfo(float amount, int index) {
+import com.robson.functions.utils.number.AbstractNumber;
+
+public record ParseInfo(AbstractNumber number, int index) {
 }

@@ -29,16 +29,26 @@ public class FunctionScreen extends Screen {
 
     public void init(){
        super.init();
+        this.addRenderableWidget(Button.builder(Component.literal("toggle"), button -> toggle())
+                .bounds((int) ((double) this.width / 2 + (10 * 12.5)), this.height / 2 + 10, 50, 10)
+                .build());
+
+        this.addRenderableWidget(Button.builder(Component.literal("increase"), button -> increase())
+                .bounds(this.width / 2 + (10 * 10), this.height / 2, 50, 10)
+                .build());
+        this.addRenderableWidget(Button.builder(Component.literal("decrease"), button -> decrease())
+                .bounds(this.width / 2 + (10 * 15), this.height / 2, 50, 10)
+                .build());
+        this.addRenderableWidget(Button.builder(Component.literal("afast"), button -> afast())
+                .bounds(this.width / 2 + (10 * 10), this.height / 2 - 10, 50, 10)
+                .build());
+        this.addRenderableWidget(Button.builder(Component.literal("aproximate"), button -> aproximate())
+                .bounds(this.width / 2 + (10 * 15), this.height / 2 - 10, 50, 10)
+                .build());
         for (int i = 0; i < CalculateFunction.validBackFunctions.size(); i++){
             Character c = CalculateFunction.validBackFunctions.get(i);
             this.addRenderableWidget(Button.builder(Component.literal(String.valueOf(c)), button -> add(c))
                     .bounds(this.width / 2 + (i * 10), this.height / 2 - 20, 10, 10)
-                    .build());
-        }
-        for (int i = 0; i < CalculateFunction.validFrontFunctions.size(); i++){
-            Character c = CalculateFunction.validFrontFunctions.get(i);
-            this.addRenderableWidget(Button.builder(Component.literal(String.valueOf(c)), button -> add(c))
-                    .bounds(this.width / 2 + ((i + 5) * 10), this.height / 2 - 10, 10, 10)
                     .build());
         }
        for (int i = 0; i < CalculateFunction.validNumbers.size(); i++){
@@ -61,6 +71,10 @@ public class FunctionScreen extends Screen {
         }
     }
 
+    public void toggle(){
+       DrawFunction.lock = !DrawFunction.lock;
+    }
+
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks){
        super.render(guiGraphics, mouseX, mouseY, partialTicks);
        if (this.minecraft != null) {
@@ -69,6 +83,25 @@ public class FunctionScreen extends Screen {
                sb.append(c);
            }
            guiGraphics.drawCenteredString(this.font, Component.literal(sb.toString()), this.width / 2, 10, 0xFFFFFF);
+       }
+    }
+
+    public void increase(){
+       DrawFunction.size++;
+    }
+
+    public void decrease(){
+       if (DrawFunction.size >= 2){
+           DrawFunction.size--;
+       }
+    }
+    public void afast(){
+            DrawFunction.distance++;
+    }
+
+    public void aproximate(){
+       if (DrawFunction.distance >= 1){
+           DrawFunction.distance--;
        }
     }
 
